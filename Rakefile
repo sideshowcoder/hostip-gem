@@ -7,10 +7,10 @@ require 'rubygems/specification'
  
 spec = Gem::Specification.new do |s|
   s.name = "hostip"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
   s.authors = ['Philipp Fehre']
   s.email = "philipp.fehre@googlemail.com"
-  s.homepage = "http://bitbucket.org/sideshowcoder/hostip-gem/"
+  s.homepage = "https://github.com/sideshowcoder/hostip-gem"
   s.description = s.summary = "A simple Ruby wrapper for hostip.info"
   s.summary = "Get geolocation, ip, country and city information for current or any other ip from hostip.info"
   
