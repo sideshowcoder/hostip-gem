@@ -1,0 +1,191 @@
+#!/usr/bin/env ruby 
+
+# == Synopsis 
+#	Get info from hostip.info service about current IP and Geo Location  
+#
+# == Examples
+#	Get ip
+#		hostip 
+#	Get city
+#		hostip --city
+#	Get longtitude and latitude
+#		hostip --geo
+#
+#	Also works for any given IP
+#	hostip --city 123.456.789.1	
+#
+# == Usage 
+#	hostip [options] [ip]
+#
+#	For help use: hostip -h
+#
+# == Options
+#	-h, --help		Displays help message
+#	-v, --version		Display version
+#	-V, --verbose		Be more verbose
+#	--city			Get city (Munich)
+#	--geo			Get longtitude and latitude (12.4567,12.2345)
+#	--country		Get country (ie Germany)
+#	--country-abbrev	Get country abbreviation (ie US)
+#
+# == Author
+#	Philipp Fehre (philipp.fehre@googlemail.com)
+#
+# == Copyright
+#	(the BSD license)
+# 
+#	Copyright 2010 Philipp Fehre. All rights reserved.
+#
+#	Redistribution and use in source and binary forms, with or without modification, are
+#	permitted provided that the following conditions are met:
+# 
+#	1. Redistributions of source code must retain the above copyright notice, this list of
+#	conditions and the following disclaimer.
+#
+#	2. Redistributions in binary form must reproduce the above copyright notice, this list
+#	of conditions and the following disclaimer in the documentation and/or other materials
+#	provided with the distribution.
+#
+#	THIS SOFTWARE IS PROVIDED BY PHILIPP FEHRE ``AS IS'' AND ANY EXPRESS OR IMPLIED
+#	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+#	FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> OR
+#	CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+#	SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+#	ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+#	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#	The views and conclusions contained in the software and documentation are those of the
+#	authors and should not be interpreted as representing official policies,
+#	either expressed or implied, of Philipp Fehre.
+#	
+
+
+require 'optparse' 
+require 'rdoc/usage'
+require 'ostruct'
+require 'date'
+require 'hostip'
+require 'ipaddr'
+
+class App
+	VERSION = '0.2.0'
+  
+	attr_reader :options
+
+	def initialize(arguments)
+	    @arguments = arguments
+    
+	    # Set defaults
+	    @options = OpenStruct.new
+	    @options.verbose = false
+	    @options.city = false  
+	    @options.geo = false
+	    @options.country = false
+	    @options.abbrev = false
+	    @options.ip = nil 
+	  end
+
+	  # Parse options, check arguments, then process the command
+	  def run
+        
+	    if parsed_options? && arguments_valid? 
+      
+	      puts "Start at #{DateTime.now}\n\n" if @options.verbose
+      
+	      process_command
+      
+	      puts "\nFinished at #{DateTime.now}" if @options.verbose
+      
+	    else
+	      output_usage
+	    end
+      
+	  end
+  
+	  protected
+  
+	    def parsed_options?
+      
+	      # Specify options
+	      opts = OptionParser.new 
+
+	      opts.on('-v', '--version')	{ output_version ; exit 0 }
+	      opts.on('-h', '--help')		{ output_help }
+	      opts.on('-V', '--verbose')	{ @options.verbose = true }  
+	      opts.on('--city')			{ @options.city = true }
+	      opts.on('--geo')			{ @options.geo = true }
+	      opts.on('--country')		{ @options.country = true }
+	      opts.on('--country-abbrev')	{ @options.abbrev = true }
+
+	      opts.parse!(@arguments) rescue return false
+      
+	      process_options
+      
+	      true      
+	    end
+
+	    # Performs post-parse processing on options
+	    def process_options
+    
+	    end
+    
+	    # True if required arguments were provided
+	    def arguments_valid?
+		# Check if IP is passed and IP is a valid IP
+		begin 
+			if @arguments[0] && IPAddr.new(@arguments[0])
+				@options.ip = @arguments[0]
+				return true
+			end
+		rescue Exception
+			return false     
+		end
+		# No IP passed, also good!
+		true
+	    end
+    
+	    def output_help
+		output_version
+		RDoc::usage() #exits app
+	    end
+    
+	    def output_usage
+		RDoc::usage('usage') # gets usage from comments above and exit
+	    end
+    
+	    def output_version
+		puts "#{File.basename(__FILE__)} version #{VERSION}"
+	    end
+    
+	    def process_command
+		hostip = Hostip.new
+	
+		unless @options.ip
+			@options.ip = hostip.ip
+			puts @options.ip
+		end
+		if @options.city
+			puts hostip.city(@options.ip)
+		end
+		if @options.geo
+			puts "#{hostip.geo_location(@options.ip)["lat"]} #{hostip.geo_location(@options.ip)["long"]}" 
+		end
+		if @options.country
+			puts hostip.country_name(@options.ip)
+		end
+		if @options.abbrev
+			puts hostip.country_abbrev(@options.ip)
+		end
+
+	    end
+
+end
+
+
+
+# Create and run the application
+app = App.new(ARGV)
+app.run
+
