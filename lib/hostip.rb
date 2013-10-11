@@ -20,7 +20,7 @@ class Hostip
   
   # get city name for ip, if no ip is passed use own ip
   def city(ip=nil)
-    self.class.request(ip)["gml:name"]
+    self.class.request(ip)["name"]
   end
   
   # get current ip
