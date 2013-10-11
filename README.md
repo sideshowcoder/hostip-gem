@@ -1,29 +1,33 @@
-== hostip
+# hostip
 
 A simple Ruby Gem wrapper for hostip.info
+
 Includes a command line tool hostip to get all information from the command line as well
-== example
-  
-	require 'rubygems'
-	require 'hostip'
 
-	hip = Hostip.new
-	
-	# get current ip
-	hip.ip
-	
-	# get current country
-	hip.country_name
-	# get country abbriviated
-	hip.country_abbrev
-	# get current geo location
-	hip.geo_location 
-	
-	# all this also works for a given ip like 74.125.77.104 (google.com)
-	hip.geo_location "74.125.77.104"
-	hip.country_name "74.125.77.104"
+## example
 
-== license 
+```ruby
+require 'rubygems'
+require 'hostip'
+
+hip = Hostip.new
+	
+# get current ip
+hip.ip
+	
+# get current country
+hip.country_name
+# get country abbriviated
+hip.country_abbrev
+# get current geo location
+hip.geo_location 
+	
+# all this also works for a given ip like 74.125.77.104 (google.com)
+hip.geo_location "74.125.77.104"
+hip.country_name "74.125.77.104"
+```
+
+## license 
 
 (the BSD license)
 
