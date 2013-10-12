@@ -20,7 +20,7 @@ class Hostip
   
   # get city name for ip, if no ip is passed use own ip
   def city(ip=nil)
-    self.class.request(ip)["gml:name"]
+    self.class.request(ip)["name"]
   end
   
   # get current ip
@@ -34,7 +34,7 @@ class Hostip
   def geo_location(ip=nil)
     begin
       # Get Comma seperated coordinates and return as hash
-      coordinates = self.class.request(ip, true)["ipLocation"]["gml:pointProperty"]["gml:Point"]["gml:coordinates"].split(',')
+      coordinates = self.class.request(ip, true)["ipLocation"]["pointProperty"]["Point"]["coordinates"].split(',')
       return { "long" => coordinates[0], "lat" => coordinates[1] }
     rescue 
       raise "geo location unknown"
@@ -58,9 +58,9 @@ class Hostip
       end
       # sent request
       if params == {}
-        self.get('/get_xml.php')["HostipLookupResultSet"]["gml:featureMember"]["Hostip"]
+        self.get('/get_xml.php')["HostipLookupResultSet"]["featureMember"]["Hostip"]
       else
-        self.get('/get_xml.php', :query => params)["HostipLookupResultSet"]["gml:featureMember"]["Hostip"]
+        self.get('/get_xml.php', :query => params)["HostipLookupResultSet"]["featureMember"]["Hostip"]
       end
     end
     
