@@ -1,20 +1,18 @@
 #!/usr/bin/env ruby
 
-require "test_helper"
-require "test/unit"
-require "hostip"
+require_relative "./test_helper"
 require "ipaddr"
 
 
-class HostipiBinTest < Test::Unit::TestCase
+class HostipiBinTest < Minitest::Test
 
-	def setup 
-		@hostipbin = "../bin/hostip"		
+	def setup
+		@hostipbin = "../bin/hostip"
 	end
 
 	def test_get_ip
 		assert_nothing_raised() do
-			 IPAddr.new(%x[ruby ../bin/hostip].chomp)	
+			 IPAddr.new(%x[ruby ../bin/hostip].chomp)
 		end
 	end
 
@@ -26,7 +24,7 @@ class HostipiBinTest < Test::Unit::TestCase
 	def test_multiple
 		mult = %x[ruby ../bin/hostip --geo --city --country 74.125.77.147].chomp
 		exp_res = "Buren\n51.9167 5.3333\nNETHERLANDS"
-		assert_equal(mult, exp_res)		
+		assert_equal(mult, exp_res)
 	end
 
 	def test_country
