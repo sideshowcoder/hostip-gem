@@ -7,31 +7,44 @@ Includes a command line tool hostip to get all information from the command line
 ## example
 
 ```ruby
-require 'rubygems'
 require 'hostip'
 
 hip = Hostip.new
-	
+
 # get current ip
 hip.ip
-	
+
 # get current country
 hip.country_name
 # get country abbriviated
 hip.country_abbrev
 # get current geo location
-hip.geo_location 
-	
+hip.geo_location
+
 # all this also works for a given ip like 74.125.77.104 (google.com)
 hip.geo_location "74.125.77.104"
 hip.country_name "74.125.77.104"
 ```
 
-## license 
+## command line
+```shell
+$ hostip --help
+hostip version 0.2.0
+Usage: hostip [options]
+    -v, --version                    display version
+    -h, --help                       display help
+    -V, --verbose                    be more verbose
+        --city                       get the city only i.e. Munich
+        --geo                        get longtitude and latitude, i.e. 12.45, 12.23
+        --country                    get the country i.e. Germany
+        --country-abbrev             get the country abbreviation i.e. US
+```
+
+## license
 
 (the BSD license)
 
-Copyright 2010 Philipp Fehre. All rights reserved.
+Copyright 2013 Philipp Fehre. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
 permitted provided that the following conditions are met:

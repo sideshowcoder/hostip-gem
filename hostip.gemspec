@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib/', __FILE__)
-$:.unshift lib unless $:.include?(lib)
-
-require 'version'
+require_relative './lib/version'
 
 Gem::Specification.new do |s|
   s.name = "hostip"
@@ -26,6 +23,7 @@ Gem::Specification.new do |s|
   s.executables = ['hostip']
   s.test_files = Dir.glob('tests/*.rb')
   s.add_dependency('httparty')
+  s.add_dependency('rdoc')
 
   s.add_development_dependency("minitest")
 end
