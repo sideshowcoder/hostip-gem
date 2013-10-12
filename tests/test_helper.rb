@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
-$LOAD_PATH << File.expand_path( File.dirname(__FILE__) + '/../lib' )
-$LOAD_PATH << File.expand_path( File.dirname(__FILE__) + '/../bin' )
+require "minitest/autorun"
+require_relative "../lib/hostip"
+require "ipaddr"
 
