@@ -1,5 +1,8 @@
 # -*- encoding: utf-8 -*-
-require_relative './lib/version'
+lib = File.expand_path('../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
+require 'version'
 
 Gem::Specification.new do |s|
   s.name = "hostip"

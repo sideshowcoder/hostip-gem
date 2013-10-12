@@ -9,7 +9,7 @@ Rake::TestTask.new do |t|
 end
 
 task :build do
-  system "gem build hostip.gemspec"
+  system "gem build ./hostip.gemspec"
 end
 
 task :release => :build do
