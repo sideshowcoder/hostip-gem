@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.executables = ['hostip']
   s.test_files = Dir.glob('tests/*.rb')
   s.add_dependency('httparty')
-  s.add_dependency('rdoc')
 
+  s.add_development_dependency('rake')
   s.add_development_dependency("minitest")
 end
