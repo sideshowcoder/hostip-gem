@@ -13,5 +13,5 @@ task :build do
 end
 
 task :release => :build do
-  system "gem push hostip-#{HOSTIP_VERSION}"
+  system "gem push hostip-#{HOSTIP_VERSION}.gem"
 end
