@@ -1,3 +1,5 @@
+![Status](https://travis-ci.org/sideshowcoder/hostip-gem.png)
+
 # hostip
 
 A simple Ruby Gem wrapper for hostip.info
