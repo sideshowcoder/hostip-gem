@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'rubygems' unless ENV['NO_RUBYGEMS']
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 require 'rubygems/specification'
 
  
@@ -16,11 +16,10 @@ spec = Gem::Specification.new do |s|
   
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
-  s.extra_rdoc_files = ["README.rdoc"]
+  s.extra_rdoc_files = ["README.md"]
   
   s.require_path = 'lib'
-  s.autorequire = 'hostip'
-  s.files = %w(README.rdoc Rakefile) + Dir.glob("{lib,tests,bin}/*")
+  s.files = %w(README.md Rakefile) + Dir.glob("{lib,tests,bin}/*")
   
   s.bindir = 'bin'
   s.executables = ['hostip']
@@ -28,7 +27,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('httparty')
 end
 
-Rake::GemPackageTask.new(spec) do |pkg|
+Gem::PackageTask.new(spec) do |pkg|
     pkg.need_tar = true
 end
 
